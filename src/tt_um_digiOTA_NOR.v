@@ -21,29 +21,24 @@ module tt_um_digiOTA (
     assign Vin = ui_in[1];
     assign uo_out[0]  = Out;  
     assign uo_out[7:1] = 7'b0000000; 
-    wire INn, INp, INn_CMP, INp_CMP, CMP, EN, not_EN, Op, On, INn_AND, INp_AND; //internals nets 
+    wire INn, INp, INn_CMP, INp_CMP, CMP, EN, not_EN, Op, On, INn_NOR, INp_NOR; //internals nets 
     not IV1(INn, Vip);    
     not INV2(INn_CMP,CMP);
     not IV3(INp, Vin);
     not INV4(INp_CMP,CMP);
-    and AND1(INn_AND, INn, INn_CMP);
-    and AND2(INp_AND, INp, INp_CMP);
-    not IV5(Op, INn_AND);
-    not IV6(On, INp_AND);
+
+    nor NOR1(INn_NOR, INn, INn_CMP); // Changed to NOR
+    nor NOR2(INp_NOR, INp, INp_CMP); // Changed to NOR
+
+
+
+    not IV5(Op, INn_NOR); //Using output of NOR gate
+    not IV6(On, INp_NOR); //Using output of NOR gate
     xor XOR1(EN, Op, On);
     not IV7(not_EN, EN);
     notif1 IT1(CMP, not_EN, Op);  
     bufif1 BT1(Out, EN, Op);   
-    //not IV1(Vip, INn);
-    //not IV2(CMP, INn);
-    //not IV3(Vin, INp);
-    //not IV4(CMP, INp);
-    //not IV5(INn, Op);
-    //not IV6(INp, On);
-    //not IV7(EN, not_En);
-    //xor XOR1(Op, On, EN);
-    //bufif1 BT1(Op, EN, Out);
-    //notif1 IT1(Op, not_EN, CMP);
+
 
     // All output pins must be assigned. If not used, assign to 0.
     assign uio_out = 0;
