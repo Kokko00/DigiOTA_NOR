@@ -9,7 +9,7 @@ You can also include images in this folder and reference them in the markdown. E
 
 ## How it works
 
-The circuit works by a voltage entered through the input, and an amplified voltage is obtained at the output.
+This circuit is a digital amplifier built using only simple logic gates. It cancels out unwanted noise and boosts the desired signal, much like noise-canceling headphones. Its digital nature simplifies integration and automated design.
 
 ## How to test
 
